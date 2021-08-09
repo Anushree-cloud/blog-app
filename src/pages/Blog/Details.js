@@ -1,10 +1,17 @@
 import React from 'react'
+import { useParams } from 'react-router';
 
-export default function Details(props) {
-    console.log(props);
+export default function Details({ blog }) {
+    const { id } = useParams()
+    console.log(id);
+    let currentBlog = blog.find((blogItem) => {
+        return blogItem.id == id ? true : false
+    })
+    console.log(currentBlog);
     return (
-        <div>
-            This is Details page of id {props.match.params.id}
-        </div>
+        <>
+            <h1>{currentBlog.name}</h1>
+            <h3>{currentBlog.details}</h3>
+        </>
     )
 }

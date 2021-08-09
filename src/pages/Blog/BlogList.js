@@ -1,109 +1,77 @@
-/* first create a new folder blog-app
-
-The app will have 4 pages for now
-
-/blogs
-/blogs/add
-/blogs/edit/:id
-/blogs/details/:id
-
-/blogs
-====
-
-Blogs listing - use meterial ui cards to show blog items, 
-
-id, name, image, date, description
-
-/blogs/details/:id
-============
-
-Single blog details
-
-
-/blogs/add    |  /blogs/edit/:id
-====================
-
-Blog creation form - name, image, date, description */
-
-// import React from 'react'
-// import { Link } from 'react-router-dom'
-
-// export default function BlogList({ blogList }) {
-//     return (
-//         blogList.map((blogItem) => {
-//             return (
-//                 <div key={blogItem.id}>
-//                     <h1>{blogItem.id}. {blogItem.name}</h1>
-//                     <div>
-//                         <Link to={`/blog/edit/${blogItem.id}`}>Edit</Link>
-//                         <Link to={`/blog/details/${blogItem.id}`}>Details</Link>
-//                     </div>
-                    
-//                 </div>
-//             )
-//         })
-//     )
-// }
-
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import { CardMedia } from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-// import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { Grid, Paper } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    // rootContainer: {
-    //     display: 'flex',
-    //     flexDirection: 'row',
-    //     flexWrap: 'wrap',
-    // },
     root: {
         maxWidth: 345,
         margin: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     },
     media: {
         height: 140,
     },
+    editButton: {
+        textDecoration: 'none', 
+        color: 'white',
+        width: '35ch',
+    },
+    rootContainer: {
+        display: "flex",
+        flexDirection: 'row',
+        marginTop: '10px',
+    }
 }));
 
 export default function BlogList({ blogList }) {
     const classes = useStyles();
-
+    const history = useHistory();
+    function goToPage(pageUrl) {
+        history.push(pageUrl)
+    }
     return (
         blogList.map( blogItem => {
             return (
-                <div className={classes.rootContainer}>
-                    <Card className={classes.root}>
-                        <CardActionArea>
-                            {/* <CardMedia
-                                className={classes.media}
-                                image="/static/images/cards/contemplative-reptile.jpg"
-                                title="Contemplative Reptile"
-                            /> */}
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {blogItem.name}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    {blogItem.details}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                        <CardActions>
-                            <Button size="small" color="primary">
-                                <Link to={`/blog/edit/${blogItem.id}`}>Edit</Link>
-                            </Button>
-                            <Button size="small" color="primary">
-                                <Link to={`/blog/details/${blogItem.id}`}>Details</Link>
-                            </Button>
-                        </CardActions>
-                    </Card>
-                </div>
+                <Grid container spacing={2} className={classes.rootContainer}>
+                    <Grid item>
+                        {/* <Paper> */}
+                            <Card className={classes.root}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        className={classes.media}
+                                        image={blogItem.url}
+                                        title="Contemplative Reptile"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2" onClick={() => goToPage(`/blog/details/${blogItem.id}`) }>
+                                            {blogItem.name}
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            {blogItem.details}
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                                <CardActions>
+                                    <Button size="large" variant="contained" color="secondary">
+                                        <Link to={`/blog/edit/${blogItem.id}`} className={classes.editButton}>
+                                            Edit
+                                        </Link>
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                        {/* </Paper> */}
+                    </Grid>
+                </Grid>
             )
         })
     )
