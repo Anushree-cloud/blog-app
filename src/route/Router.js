@@ -1,21 +1,37 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Blog from '../blog/Blog'
-import Add from '../blog/Add'
-import Navbar from '../navbar/Navbar'
-import Edit from '../blog/Edit'
-import Details from '../blog/Details'
+import Blog from '../pages/Blog/BlogList'
+import Home from '../pages/Home'
+import Add from '../pages/Blog/Add'
+import Navbar from '../components/Navbar'
+import Edit from '../pages/Blog/Edit'
+import Details from '../pages/Blog/Details'
+import ErrorPage from '../pages/Blog/ErrorPage'
 
-export default function Router() {
+export default function Router({ blog }) {
     return (
         <>
             <BrowserRouter>
-              <Navbar />  
-                <Route exact path='/blog' component={Blog} />
+                <Navbar />
+                <Switch >
+
+                <Route exact path='/'>
+                    <Home />
+                </Route>
+
+                <Route exact path='/blog'>
+                    <Blog blogList={blog} />
+                </Route>
+
                 <Route exact path='/blog/add' component={Add} />
+
                 <Route exact path='/blog/edit/:id' component={Edit} />
-                <Route exact path='/blog/details/:id' component={Details} />
-                <Switch />
+
+                <Route exact path='/blog/details/:id' component={Details}/>
+
+                <Route exact component={ErrorPage}/>
+
+                </Switch>
             </BrowserRouter>
         </>
     )
