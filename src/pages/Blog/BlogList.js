@@ -37,13 +37,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BlogList() {
     const [blogList, setBlogList] = useState([])
+    const [loading, setLoading] = useState(true)
     const classes = useStyles();
     const history = useHistory();
     function goToPage(pageUrl) {
         history.push(pageUrl)
     }
+    
 
     useEffect(() => {
+        setLoading(true)
+
         axios.get(`http://localhost:5000/v1/api/blogs`).then( res => {
         console.log(res);
         setBlogList(res.data.data);
@@ -51,49 +55,67 @@ export default function BlogList() {
         }).catch( error => {
             console.log(error);
         })
+
+        setLoading(false)
     }, [])
     
     
     return (
-        <Grid container spacing={2} className={classes.rootContainer}>
+        <>
         {
-            blogList.map( blogItem => {
-                return (
-                    <Grid item lg={3} md={3} sm={6} xs={6}>
-                        
-                        <Card className={classes.root}>
-
-                            <CardActionArea>
-                                <CardMedia
-                                    className={classes.media}
-                                    image={blogItem.url}
-                                    title="Contemplative Reptile"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2" onClick={() => goToPage(`/blog/details/${blogItem.id}`) }>
-                                        {blogItem.name}
-                                    </Typography>
-                                    <Typography variant="body2" color="textSecondary" component="p">
-                                        {blogItem.details}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-
-                            <CardActions>
-                                <Button size="large" variant="contained" color="secondary">
-                                    <Link to={`/blog/edit/${blogItem.id}`} className={classes.editButton}>
-                                        Edit
-                                    </Link>
-                                </Button>
-                            </CardActions>
-
-                        </Card>
-                        
-                    </Grid>
-                )
-            })
+            loading ? (
+                <h1>Loading.....</h1>
+            ) : (
+                
+                    blogList.length ? (
+                        <Grid container spacing={2} className={classes.rootContainer}>
+                        {
+                        blogList.map( blogItem => {
+                            return (
+                                <Grid item lg={3} md={3} sm={6} xs={6}>
+                                    
+                                    <Card className={classes.root} key={blogItem.id}>
+        
+                                        <CardActionArea>
+                                            <CardMedia
+                                                className={classes.media}
+                                                image={blogItem.image_url}
+                                                title="Contemplative Reptile"
+                                            />
+                                            <CardContent>
+                                                <Typography gutterBottom variant="h5" component="h2" onClick={() => goToPage(`/blog/details/${blogItem.id}`) }>
+                                                    {blogItem.name}
+                                                </Typography>
+                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                    {blogItem.description}
+                                                </Typography>
+                                            </CardContent>
+                                        </CardActionArea>
+        
+                                        <CardActions>
+                                            <Button size="large" variant="contained" color="secondary">
+                                                <Link to={`/blog/edit/${blogItem.id}`} className={classes.editButton}>
+                                                    Edit
+                                                </Link>
+                                            </Button>
+                                        </CardActions>
+        
+                                    </Card>
+                                    
+                                </Grid>
+                            )
+                        })
+                    }
+                </Grid>
+                    ) : (
+                        <h1>Nothing To Show!!</h1>
+                    )
+                
+            )
         }
-        </Grid>
+        
+        
+        </>
     )
 }
 
