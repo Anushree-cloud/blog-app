@@ -24,13 +24,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Add(props) {
     const classes = useStyles();
-    const [postBlog, setPostBlog] = useState([
+    const [postBlog, setPostBlog] = useState(
         {
             name: "",
             description: "",
             image_url: ""
         }
-    ]);
+    );
     const { name, description, image_url } = postBlog
 
     const inputHandler = (e) => {
