@@ -51,12 +51,13 @@ export default function BlogList() {
         axios.get(`http://localhost:5000/v1/api/blogs`).then( res => {
         console.log(res);
         setBlogList(res.data.data);
+        setLoading(false)
         console.log(blogList);
         }).catch( error => {
             console.log(error);
         })
 
-        setLoading(false)
+        
     }, [])
     
     
