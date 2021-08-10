@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -43,12 +43,16 @@ export default function BlogList() {
         history.push(pageUrl)
     }
 
-    axios.get(`http://localhost:5000/v1/api/blogs`).then( res => {
+    useEffect(() => {
+        axios.get(`http://localhost:5000/v1/api/blogs`).then( res => {
         console.log(res);
-        setBlogList(res);
-    }).catch( error => {
-        console.log("Error: ",error);
-    })
+        setBlogList(res.data);
+        console.log(blogList);
+        }).catch( error => {
+            console.log(error);
+        })
+    }, [])
+    
     
     return (
         <Grid container spacing={2} className={classes.rootContainer}>

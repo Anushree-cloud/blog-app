@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -41,11 +41,14 @@ export default function Add(props) {
         console.log(postBlog);
     }
 
-    axios.post(`http://localhost:5000/v1/api/blogs`, {postBlog}).then( res => {
-        console.log(res);
-    }).catch( error => {
-        console.log(error);
-    })
+    useEffect(() => {
+        axios.post(`http://localhost:5000/v1/api/blogs`, {postBlog}).then( res => {
+            console.log(res);
+        }).catch( error => {
+            console.log(error);
+        })
+    }, [postBlog])
+    
 
     return (
         <form className={classes.root} noValidate autoComplete="off" onSubmit={submitBlogHandler}>
