@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Add(props) {
     const classes = useStyles();
+    const [loading, setLoading] = useState(false)
     const [postBlog, setPostBlog] = useState(
         {
             name: "",
@@ -41,23 +42,30 @@ export default function Add(props) {
             }
         })
     }
+
+    function createBlog() {
+        setLoading(true)
+        axios.post(`http://localhost:5000/v1/api/blogs`, postBlog).then((res) => {
+            console.log(res);
+            setLoading(false)
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
     
     const submitBlogHandler = (e) => {
         e.preventDefault()
         console.log(postBlog);
-        
-        axios.post(`http://localhost:5000/v1/api/blogs`, postBlog).then((res) => {
-            console.log(res);
-        }).catch((error) => {
-            console.log(error);
-        })
-        
+        createBlog()
+        setLoading(true)
     }
 
     
 
     return (
-        <form className={classes.root} noValidate autoComplete="off" onSubmit={submitBlogHandler}>
+        <>
+        {!loading ? (
+            <form className={classes.root} autoComplete="off" onSubmit={submitBlogHandler}>
             <div>
                 <TextField 
                     required 
@@ -80,6 +88,7 @@ export default function Add(props) {
                     multiline
                     fullWidth
                     onChange={inputHandler}
+                    required
                 />
                 {/* <TextField 
                     required 
@@ -106,5 +115,11 @@ export default function Add(props) {
                 <Button variant="contained" color="secondary" type="submit">Add Blog</Button>
             </div>
         </form>
+        ) : (
+            <h1>Loading....</h1>
+        )
+    }
+        
+        </>
     )
 }
