@@ -46,7 +46,7 @@ export default function BlogList() {
     useEffect(() => {
         axios.get(`http://localhost:5000/v1/api/blogs`).then( res => {
         console.log(res);
-        setBlogList(res.data);
+        setBlogList(res.data.data);
         console.log(blogList);
         }).catch( error => {
             console.log(error);

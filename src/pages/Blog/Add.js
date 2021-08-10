@@ -31,23 +31,29 @@ export default function Add(props) {
             image_url: ""
         }
     ]);
+    const { name, description, image_url } = postBlog
 
     const inputHandler = (e) => {
-        setPostBlog({[e.target.name]: e.target.value})
+        setPostBlog((previousBlogData) => {
+            return {
+                ...previousBlogData,
+                [e.target.name]: e.target.value
+            }
+        })
     }
     
     const submitBlogHandler = (e) => {
         e.preventDefault()
         console.log(postBlog);
-    }
-
-    useEffect(() => {
-        axios.post(`http://localhost:5000/v1/api/blogs`, {postBlog}).then( res => {
+        
+        axios.post(`http://localhost:5000/v1/api/blogs`,{postBlog}).then((res) => {
             console.log(res);
-        }).catch( error => {
+        }).catch((error) => {
             console.log(error);
         })
-    }, [postBlog])
+        
+    }
+
     
 
     return (
@@ -57,6 +63,7 @@ export default function Add(props) {
                     required 
                     label="Name"
                     name="name"
+                    value={name}
                     id="standard-full-width"
                     style={{ margin: 8 }}
                     placeholder="Name"
@@ -68,6 +75,7 @@ export default function Add(props) {
                     id="standard-textarea"
                     label="Description"
                     name="description"
+                    value={description}
                     placeholder="Description"
                     multiline
                     fullWidth
@@ -87,6 +95,7 @@ export default function Add(props) {
                     required 
                     label="Image URL" 
                     name="image_url"
+                    value={image_url}
                     id="standard-full-width"
                     style={{ margin: 8 }}
                     placeholder="Image URL"
