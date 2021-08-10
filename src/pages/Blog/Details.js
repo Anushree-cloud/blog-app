@@ -5,7 +5,7 @@ export default function Details({ blog }) {
     const { id } = useParams()
     console.log(id);
     let currentBlog = blog.find((blogItem) => {
-        return blogItem.id == id ? true : false
+        return blogItem.id === id ? true : false
     })
     console.log(currentBlog);
     return (

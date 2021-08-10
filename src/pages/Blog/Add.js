@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-// import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-// import { Grid } from '@material-ui/core';
+import axios from 'axios';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,56 +23,76 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Add(props) {
-    // const [selectedDate, setSelectedDate] = React.useState(Date.now());
-    // const handleDateChange = (date) => {
-    //     setSelectedDate(date);
-    // };
-    console.log(props);
-    
     const classes = useStyles();
-    return (
-        <form className={classes.root} noValidate autoComplete="off">
-        <div>
-            <TextField 
-                required 
-                label="Name" 
-                id="standard-full-width"
-                style={{ margin: 8 }}
-                placeholder="Name"
-                fullWidth
-                margin="normal"
-                
-            />
-            <TextField 
-                id="standard-textarea"
-                label="Multiline Placeholder"
-                placeholder="Placeholder"
-                multiline
-                fullWidth
+    const [postBlog, setPostBlog] = useState([
+        {
+            name: "",
+            description: "",
+            image_url: ""
+        }
+    ]);
 
-            />
-            <TextField 
-                required 
-                label="Date" 
-                id="standard-full-width"
-                style={{ margin: 8 }}
-                placeholder="Date"
-                fullWidth
-                margin="normal"
-                
-            />
-            <TextField 
-                required 
-                label="Image URL" 
-                id="standard-full-width"
-                style={{ margin: 8 }}
-                placeholder="Image URL"
-                fullWidth
-                margin="normal"
-                
-            />
-            <Button variant="contained" color="secondary">Add Blog</Button>
-        </div>
-    </form>
+    const inputHandler = (e) => {
+        setPostBlog({[e.target.name]: e.target.value})
+    }
+    
+    const submitBlogHandler = (e) => {
+        e.preventDefault()
+        console.log(postBlog);
+    }
+
+    axios.post(`http://localhost:5000/v1/api/blogs`, {postBlog}).then( res => {
+        console.log(res);
+    }).catch( error => {
+        console.log(error);
+    })
+
+    return (
+        <form className={classes.root} noValidate autoComplete="off" onSubmit={submitBlogHandler}>
+            <div>
+                <TextField 
+                    required 
+                    label="Name"
+                    name="name"
+                    id="standard-full-width"
+                    style={{ margin: 8 }}
+                    placeholder="Name"
+                    fullWidth
+                    margin="normal"
+                    onChange={inputHandler}
+                />
+                <TextField 
+                    id="standard-textarea"
+                    label="Description"
+                    name="description"
+                    placeholder="Description"
+                    multiline
+                    fullWidth
+                    onChange={inputHandler}
+                />
+                {/* <TextField 
+                    required 
+                    label="Date" 
+                    id="standard-full-width"
+                    style={{ margin: 8 }}
+                    placeholder="Date"
+                    fullWidth
+                    margin="normal"
+                    
+                /> */}
+                <TextField 
+                    required 
+                    label="Image URL" 
+                    name="image_url"
+                    id="standard-full-width"
+                    style={{ margin: 8 }}
+                    placeholder="Image URL"
+                    fullWidth
+                    margin="normal"
+                    onChange={inputHandler}
+                />
+                <Button variant="contained" color="secondary" type="submit">Add Blog</Button>
+            </div>
+        </form>
     )
 }

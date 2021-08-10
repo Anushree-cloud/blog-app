@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import { CardMedia } from '@material-ui/core';
+import { CardMedia, Grid } from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Link, useHistory } from 'react-router-dom';
-import { Grid, Paper } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,56 +25,71 @@ const useStyles = makeStyles((theme) => ({
     editButton: {
         textDecoration: 'none', 
         color: 'white',
-        width: '35ch',
+        width: '18vw',
     },
     rootContainer: {
         display: "flex",
         flexDirection: 'row',
         marginTop: '10px',
+        justifyContent:'center',
     }
 }));
 
-export default function BlogList({ blogList }) {
+export default function BlogList() {
+    const [blogList, setBlogList] = useState([])
     const classes = useStyles();
     const history = useHistory();
     function goToPage(pageUrl) {
         history.push(pageUrl)
     }
+
+    axios.get(`http://localhost:5000/v1/api/blogs`).then( res => {
+        console.log(res);
+        setBlogList(res);
+    }).catch( error => {
+        console.log("Error: ",error);
+    })
+    
     return (
-        blogList.map( blogItem => {
-            return (
-                <Grid container spacing={2} className={classes.rootContainer}>
-                    <Grid item>
-                        {/* <Paper> */}
-                            <Card className={classes.root}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        className={classes.media}
-                                        image={blogItem.url}
-                                        title="Contemplative Reptile"
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="h2" onClick={() => goToPage(`/blog/details/${blogItem.id}`) }>
-                                            {blogItem.name}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            {blogItem.details}
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                                <CardActions>
-                                    <Button size="large" variant="contained" color="secondary">
-                                        <Link to={`/blog/edit/${blogItem.id}`} className={classes.editButton}>
-                                            Edit
-                                        </Link>
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        {/* </Paper> */}
+        <Grid container spacing={2} className={classes.rootContainer}>
+        {
+            blogList.map( blogItem => {
+                return (
+                    <Grid item lg={3} md={3} sm={6} xs={6}>
+                        
+                        <Card className={classes.root}>
+
+                            <CardActionArea>
+                                <CardMedia
+                                    className={classes.media}
+                                    image={blogItem.url}
+                                    title="Contemplative Reptile"
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2" onClick={() => goToPage(`/blog/details/${blogItem.id}`) }>
+                                        {blogItem.name}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        {blogItem.details}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+
+                            <CardActions>
+                                <Button size="large" variant="contained" color="secondary">
+                                    <Link to={`/blog/edit/${blogItem.id}`} className={classes.editButton}>
+                                        Edit
+                                    </Link>
+                                </Button>
+                            </CardActions>
+
+                        </Card>
+                        
                     </Grid>
-                </Grid>
-            )
-        })
+                )
+            })
+        }
+        </Grid>
     )
 }
 

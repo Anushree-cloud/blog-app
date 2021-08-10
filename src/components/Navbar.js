@@ -22,7 +22,6 @@ import { withRouter } from 'react-router-dom';
     }));
 
     function Navbar(props) {
-        console.log(props);
         const { history } = props
         const classes = useStyles();
         const [anchorEl, setAnchorEl] = React.useState(null);
