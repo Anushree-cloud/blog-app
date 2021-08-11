@@ -1,12 +1,30 @@
+import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import React, { useState, useEffect} from 'react'
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+
+
+const useStyle = makeStyles(() => ({
+    editButton: {
+        textDecoration: 'none', 
+        color: 'white',
+        width: '5vw',
+    },
+    btn: {
+        margin: "5px",
+    }
+}))
 
 export default function Details() {
-    const [blog, setBlog] = useState([])
+    const classes = useStyle()
+    const [blog, setBlog] = useState({})
+    const { id } = useParams()
+    const history = useHistory()
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/v1/api/blogs`).then( res => {
+        axios.get(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
         console.log(res);
         setBlog(res.data.data);
         console.log(blog);
@@ -15,16 +33,28 @@ export default function Details() {
         })
     }, [])
 
-    const { id } = useParams()
-    console.log(id);
-    let currentBlog = blog.find((blogItem) => {
-        return blogItem.id === id ? true : false
-    })
-    console.log(currentBlog);
+    function deleteBlog() {
+        axios.delete(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
+            console.log(res);
+            history.push('/')
+        }).catch( error => {
+            console.log(error);
+        })
+        
+    } 
+    
     return (
         <>
-            <h1>{currentBlog.name}</h1>
-            <h3>{currentBlog.description}</h3>
+            <h1>{blog.name}</h1>
+            <p>{blog.description}</p>
+            <Button size="large" variant="contained" color="secondary" className={classes.btn}>
+                <Link to={`/blog/edit/${blog.id}`} className={classes.editButton}>
+                    Edit
+                </Link>
+            </Button>
+            <Button size="large" variant="contained" color="secondary" className={classes.btn} onClick={deleteBlog}>
+                Delete
+            </Button>
         </>
     )
 }

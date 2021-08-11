@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useParams, useHistory } from 'react-router';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,32 +21,67 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Edit(props) {
-    console.log(props);
-    
+export default function Edit() {
     const classes = useStyles();
+    const { id } = useParams();
+    const history = useHistory();
+    const [newBlog, setNewBlog] = useState({
+        name: "",
+        description: "",
+        image_url: ""
+    })
+    
+    const inputHandler = (e) => {
+        setNewBlog((previousBlogData) => {
+            return (
+                {
+                    ...previousBlogData,
+                    [e.target.name]: e.target.value
+                }
+            )
+        })
+    }
+
+    function editBlog() { 
+        axios.put(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
+            console.log(res);
+        }).catch( error => {
+            console.log(error);
+        })
+    }
+
+    const editBlogHandler = (e) => {
+        e.preventDefault()
+        editBlog()
+        history.push(`/blog/details/${id}`)
+    }
+
     return (
-        <form className={classes.root} noValidate autoComplete="off">
+        <form className={classes.root} autoComplete="off" onSubmit={editBlogHandler}>
         <div>
             <TextField 
                 required 
-                label="Name" 
+                label="Name"
+                name="name"
+                value={newBlog.name}
                 id="standard-full-width"
                 style={{ margin: 8 }}
                 placeholder="Name"
                 fullWidth
                 margin="normal"
-                
+                onChange={inputHandler}
             />
             <TextField 
                 id="standard-textarea"
-                label="Multiline Placeholder"
-                placeholder="Placeholder"
+                label="Description"
+                name="description"
+                value={newBlog.description}
+                placeholder="Description"
                 multiline
                 fullWidth
-
+                onChange={inputHandler}
             />
-            <TextField 
+            {/* <TextField 
                 required 
                 label="Date" 
                 id="standard-full-width"
@@ -53,18 +90,20 @@ export default function Edit(props) {
                 fullWidth
                 margin="normal"
                 
-            />
+            /> */}
             <TextField 
                 required 
                 label="Image URL" 
+                name="image_url"
+                value={newBlog.image_url}
                 id="standard-full-width"
                 style={{ margin: 8 }}
                 placeholder="Image URL"
                 fullWidth
                 margin="normal"
-                
+                onChange={inputHandler}
             />
-            <Button variant="contained" color="secondary">Edit</Button>
+            <Button variant="contained" color="secondary" type="submit">Edit</Button>
         </div>
     </form>
     )

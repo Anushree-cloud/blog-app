@@ -87,19 +87,19 @@ export default function BlogList() {
                                                 <Typography gutterBottom variant="h5" component="h2" onClick={() => goToPage(`/blog/details/${blogItem.id}`) }>
                                                     {blogItem.name}
                                                 </Typography>
-                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                {/* <Typography variant="body2" color="textSecondary" component="p">
                                                     {blogItem.description}
-                                                </Typography>
+                                                </Typography> */}
                                             </CardContent>
                                         </CardActionArea>
         
-                                        <CardActions>
+                                        {/* <CardActions>
                                             <Button size="large" variant="contained" color="secondary">
                                                 <Link to={`/blog/edit/${blogItem.id}`} className={classes.editButton}>
                                                     Edit
                                                 </Link>
                                             </Button>
-                                        </CardActions>
+                                        </CardActions> */}
         
                                     </Card>
                                     
