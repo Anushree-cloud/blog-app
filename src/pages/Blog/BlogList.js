@@ -75,7 +75,7 @@ export default function BlogList() {
                             return (
                                 <Grid item lg={3} md={3} sm={6} xs={6}>
                                     
-                                    <Card className={classes.root} key={blogItem.id}>
+                                    <Card className={classes.root} key={blogItem.id} onClick={() => goToPage(`/blog/details/${blogItem.id}`)}>
         
                                         <CardActionArea>
                                             <CardMedia
@@ -84,7 +84,7 @@ export default function BlogList() {
                                                 title="Contemplative Reptile"
                                             />
                                             <CardContent>
-                                                <Typography gutterBottom variant="h5" component="h2" onClick={() => goToPage(`/blog/details/${blogItem.id}`) }>
+                                                <Typography gutterBottom variant="h5" component="h2">
                                                     {blogItem.name}
                                                 </Typography>
                                                 {/* <Typography variant="body2" color="textSecondary" component="p">

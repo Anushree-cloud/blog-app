@@ -5,7 +5,6 @@ import React, { useState, useEffect} from 'react'
 import { useParams, useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
-
 const useStyle = makeStyles(() => ({
     editButton: {
         textDecoration: 'none', 
@@ -20,14 +19,15 @@ const useStyle = makeStyles(() => ({
 export default function Details() {
     const classes = useStyle()
     const [blog, setBlog] = useState({})
+    const [loading, setLoading] = useState(true)
     const { id } = useParams()
     const history = useHistory()
 
     useEffect(() => {
+        setLoading(true)
         axios.get(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
-        console.log(res);
         setBlog(res.data.data);
-        console.log(blog);
+        setLoading(false)
         }).catch( error => {
             console.log(error);
         })
@@ -45,16 +45,25 @@ export default function Details() {
     
     return (
         <>
-            <h1>{blog.name}</h1>
-            <p>{blog.description}</p>
-            <Button size="large" variant="contained" color="secondary" className={classes.btn}>
-                <Link to={`/blog/edit/${blog.id}`} className={classes.editButton}>
-                    Edit
-                </Link>
-            </Button>
-            <Button size="large" variant="contained" color="secondary" className={classes.btn} onClick={deleteBlog}>
-                Delete
-            </Button>
+            {
+                loading ? (
+                    <h1>Loading...</h1>
+                ) : (
+                    <>
+                        <h1>{blog.name}</h1>
+                        <p>{blog.description}</p>
+                        <Button size="large" variant="contained" color="secondary" className={classes.btn}>
+                            <Link to={`/blog/edit/${blog.id}`} className={classes.editButton}>
+                                Edit
+                            </Link>
+                        </Button>
+                        <Button size="large" variant="contained" color="secondary" className={classes.btn} onClick={deleteBlog}>
+                            Delete
+                        </Button>
+                    </>
+                )
+            }
+            
         </>
     )
 }

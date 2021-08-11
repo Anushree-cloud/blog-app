@@ -25,6 +25,7 @@ export default function Edit() {
     const classes = useStyles();
     const { id } = useParams();
     const history = useHistory();
+    const [loading, setLoading] = useState(false)
     const [newBlog, setNewBlog] = useState({
         name: "",
         description: "",
@@ -43,8 +44,10 @@ export default function Edit() {
     }
 
     function editBlog() { 
-        axios.put(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
+        setLoading(true)
+        axios.put(`http://localhost:5000/v1/api/blogs/${id}`, newBlog).then( res => {
             console.log(res);
+            setLoading(false)
         }).catch( error => {
             console.log(error);
         })
@@ -53,59 +56,69 @@ export default function Edit() {
     const editBlogHandler = (e) => {
         e.preventDefault()
         editBlog()
+        setLoading(true)
         history.push(`/blog/details/${id}`)
     }
 
     return (
-        <form className={classes.root} autoComplete="off" onSubmit={editBlogHandler}>
-        <div>
-            <TextField 
-                required 
-                label="Name"
-                name="name"
-                value={newBlog.name}
-                id="standard-full-width"
-                style={{ margin: 8 }}
-                placeholder="Name"
-                fullWidth
-                margin="normal"
-                onChange={inputHandler}
-            />
-            <TextField 
-                id="standard-textarea"
-                label="Description"
-                name="description"
-                value={newBlog.description}
-                placeholder="Description"
-                multiline
-                fullWidth
-                onChange={inputHandler}
-            />
-            {/* <TextField 
-                required 
-                label="Date" 
-                id="standard-full-width"
-                style={{ margin: 8 }}
-                placeholder="Date"
-                fullWidth
-                margin="normal"
-                
-            /> */}
-            <TextField 
-                required 
-                label="Image URL" 
-                name="image_url"
-                value={newBlog.image_url}
-                id="standard-full-width"
-                style={{ margin: 8 }}
-                placeholder="Image URL"
-                fullWidth
-                margin="normal"
-                onChange={inputHandler}
-            />
-            <Button variant="contained" color="secondary" type="submit">Edit</Button>
-        </div>
-    </form>
+        <>
+        {
+            loading ? (
+                <h1>Loading...</h1>
+            ) : (
+                <form className={classes.root} autoComplete="off" onSubmit={editBlogHandler}>
+                    <div>
+                        <TextField 
+                            required 
+                            label="Name"
+                            name="name"
+                            value={newBlog.name}
+                            id="standard-full-width"
+                            style={{ margin: 8 }}
+                            placeholder="Name"
+                            fullWidth
+                            margin="normal"
+                            onChange={inputHandler}
+                        />
+                        <TextField 
+                            id="standard-textarea"
+                            label="Description"
+                            name="description"
+                            value={newBlog.description}
+                            placeholder="Description"
+                            multiline
+                            fullWidth
+                            onChange={inputHandler}
+                        />
+                        {/* <TextField 
+                            required 
+                            label="Date" 
+                            id="standard-full-width"
+                            style={{ margin: 8 }}
+                            placeholder="Date"
+                            fullWidth
+                            margin="normal"
+                            
+                        /> */}
+                        <TextField 
+                            required 
+                            label="Image URL" 
+                            name="image_url"
+                            value={newBlog.image_url}
+                            id="standard-full-width"
+                            style={{ margin: 8 }}
+                            placeholder="Image URL"
+                            fullWidth
+                            margin="normal"
+                            onChange={inputHandler}
+                        />
+                        <Button variant="contained" color="secondary" type="submit">Edit</Button>
+                    </div>
+                </form>
+            )
+        }
+        
+        </>
     )
 }
 
