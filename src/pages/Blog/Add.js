@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 import { useForm } from 'react-hook-form';
-import { required } from 'yargs';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -84,11 +83,14 @@ export default function Add() {
                     placeholder="Name"
                     fullWidth
                     margin="normal"
-                    inputRef={register({
-                        required: true
+                    // inputRef={register({
+                    //     required: "Blog-Name is required!"
+                    // })}
+                    {...register('test', {
+                        required: true,
                     })}
                     error={Boolean(errors.name)}
-                    helperText={errors.name ? "Blog-Name is required!" : ""}
+                    helperText={errors.name?.message}
                     onChange={inputHandler}
                 />
                 <TextField 
