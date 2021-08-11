@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,12 +26,35 @@ export default function Edit() {
     const { id } = useParams();
     const history = useHistory();
     const [loading, setLoading] = useState(false)
-    const [newBlog, setNewBlog] = useState({
+    const [previosBlogContent, setPreviousBlogContent] = useState({
         name: "",
         description: "",
         image_url: ""
     })
+    const [newBlog, setNewBlog] = useState({
+        name: previosBlogContent.name,
+        description: previosBlogContent.description,
+        image_url: previosBlogContent.description,
+    })
     
+    useEffect(() => {
+        axios.get(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
+            setPreviousBlogContent(res.data.data)
+            // console.log("res.data.data: ", res.data.data);
+        }).catch( error => {
+            console.log(error);
+        })
+    }, [])
+
+    // function getData () {
+    //     axios.get(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
+    //         setPreviousBlogContent(res.data.data)
+    //         console.log("res.data.data: ", res.data.data);
+    //     }).catch( error => {
+    //         console.log(error);
+    //     })
+    // }
+
     const inputHandler = (e) => {
         setNewBlog((previousBlogData) => {
             return (
@@ -45,6 +68,7 @@ export default function Edit() {
 
     function editBlog() { 
         setLoading(true)
+        
         axios.put(`http://localhost:5000/v1/api/blogs/${id}`, newBlog).then( res => {
             console.log(res);
             setLoading(false)
@@ -59,7 +83,7 @@ export default function Edit() {
         setLoading(true)
         history.push(`/blog/details/${id}`)
     }
-
+    
     return (
         <>
         {
@@ -72,10 +96,9 @@ export default function Edit() {
                             required 
                             label="Name"
                             name="name"
-                            value={newBlog.name}
+                            defaultValue={newBlog.name}
                             id="standard-full-width"
                             style={{ margin: 8 }}
-                            placeholder="Name"
                             fullWidth
                             margin="normal"
                             onChange={inputHandler}
@@ -85,7 +108,6 @@ export default function Edit() {
                             label="Description"
                             name="description"
                             value={newBlog.description}
-                            placeholder="Description"
                             multiline
                             fullWidth
                             onChange={inputHandler}
@@ -107,7 +129,6 @@ export default function Edit() {
                             value={newBlog.image_url}
                             id="standard-full-width"
                             style={{ margin: 8 }}
-                            placeholder="Image URL"
                             fullWidth
                             margin="normal"
                             onChange={inputHandler}
