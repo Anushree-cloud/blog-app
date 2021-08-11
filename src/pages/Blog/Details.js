@@ -31,7 +31,7 @@ export default function Details() {
         }).catch( error => {
             console.log(error);
         })
-    }, [id])
+    }, [])
 
     function deleteBlog() {
         axios.delete(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {

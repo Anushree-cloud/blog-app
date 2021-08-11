@@ -44,7 +44,7 @@ export default function Edit() {
         }).catch( error => {
             console.log(error);
         })
-    }, [id])
+    }, [])
 
 
     const inputHandler = (e) => {
