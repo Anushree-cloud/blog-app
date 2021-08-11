@@ -26,34 +26,26 @@ export default function Edit() {
     const { id } = useParams();
     const history = useHistory();
     const [loading, setLoading] = useState(false)
-    const [previosBlogContent, setPreviousBlogContent] = useState({
+    // const [previosBlogContent, setPreviousBlogContent] = useState({
+    //     name: "",
+    //     description: "",
+    //     image_url: ""
+    // })
+    const [newBlog, setNewBlog] = useState({
         name: "",
         description: "",
-        image_url: ""
-    })
-    const [newBlog, setNewBlog] = useState({
-        name: previosBlogContent.name,
-        description: previosBlogContent.description,
-        image_url: previosBlogContent.description,
+        image_url: "",
     })
     
     useEffect(() => {
         axios.get(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
-            setPreviousBlogContent(res.data.data)
+            setNewBlog(res.data.data)
             // console.log("res.data.data: ", res.data.data);
         }).catch( error => {
             console.log(error);
         })
-    }, [])
+    }, [id])
 
-    // function getData () {
-    //     axios.get(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
-    //         setPreviousBlogContent(res.data.data)
-    //         console.log("res.data.data: ", res.data.data);
-    //     }).catch( error => {
-    //         console.log(error);
-    //     })
-    // }
 
     const inputHandler = (e) => {
         setNewBlog((previousBlogData) => {
@@ -96,7 +88,7 @@ export default function Edit() {
                             required 
                             label="Name"
                             name="name"
-                            defaultValue={newBlog.name}
+                            value={newBlog.name}
                             id="standard-full-width"
                             style={{ margin: 8 }}
                             fullWidth

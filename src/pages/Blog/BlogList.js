@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { CardMedia, Grid } from '@material-ui/core';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
@@ -69,9 +67,9 @@ export default function BlogList() {
                         {
                         blogList.map( blogItem => {
                             return (
-                                <Grid item lg={3} md={3} sm={6} xs={6}>
+                                <Grid item lg={3} md={3} sm={6} xs={6} key={blogItem.id}>
                                     
-                                    <Card className={classes.root} key={blogItem.id} onClick={() => goToPage(`/blog/details/${blogItem.id}`)}>
+                                    <Card className={classes.root} onClick={() => goToPage(`/blog/details/${blogItem.id}`)}>
         
                                         <CardActionArea>
                                             <CardMedia
