@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { useHistory } from 'react-router';
+import { useForm } from 'react-hook-form';
+import { required } from 'yargs';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Add() {
     const classes = useStyles();
     const history = useHistory();
+    const { register, handleSubmit, errors } = useForm()
     const [loading, setLoading] = useState(false)
     const [postBlog, setPostBlog] = useState(
         {
@@ -34,6 +37,8 @@ export default function Add() {
             image_url: ""
         }
     );
+
+
     const { name, description, image_url } = postBlog
 
     const inputHandler = (e) => {
@@ -68,10 +73,9 @@ export default function Add() {
     return (
         <>
         {!loading ? (
-            <form className={classes.root} autoComplete="off" onSubmit={submitBlogHandler}>
+            <form className={classes.root} autoComplete="off" onSubmit={handleSubmit(submitBlogHandler)}>
             <div>
                 <TextField 
-                    required 
                     label="Name"
                     name="name"
                     value={name}
@@ -80,6 +84,11 @@ export default function Add() {
                     placeholder="Name"
                     fullWidth
                     margin="normal"
+                    inputRef={register({
+                        required: true
+                    })}
+                    error={Boolean(errors.name)}
+                    helperText={errors.name ? "Blog-Name is required!" : ""}
                     onChange={inputHandler}
                 />
                 <TextField 
@@ -91,7 +100,8 @@ export default function Add() {
                     multiline
                     fullWidth
                     onChange={inputHandler}
-                    required
+                    inputRef={register}
+                    
                 />
                 {/* <TextField 
                     required 
@@ -104,7 +114,6 @@ export default function Add() {
                     
                 /> */}
                 <TextField 
-                    required 
                     label="Image URL" 
                     name="image_url"
                     value={image_url}
@@ -113,6 +122,7 @@ export default function Add() {
                     placeholder="Image URL"
                     fullWidth
                     margin="normal"
+                    inputRef={register}
                     onChange={inputHandler}
                 />
                 <Button variant="contained" color="secondary" type="submit">Add Blog</Button>
