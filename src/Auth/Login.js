@@ -1,4 +1,6 @@
 import { Button, TextField } from '@material-ui/core'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useHistory } from 'react-router';
 import { makeStyles } from '@material-ui/styles'
 import { useFormik } from 'formik';
 import * as yup from 'yup'
@@ -10,11 +12,16 @@ const useStyles = makeStyles((theme) => ({
         width: '32ch',
       },
     },
+    headerIcon : {
+        width: '5ch',
+        height: '5ch',
+    },
     formContainer: {
         position: 'absolute',
-        top: '30%',
+        top: '20%',
         left: '35%',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         border: '2px solid black',
         padding: '40px',
@@ -27,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         margin: '2px',
+        fontSize: 'smaller'
     },
     linkContainer: {
         margin: '5px',
@@ -51,6 +59,7 @@ const validationSchema = yup.object({
 
 export default function Login() {
     const classes = useStyles()
+    const history = useHistory()
     const formik = useFormik({
         initialValues: {
             email: 'abc@gmail.com',
@@ -63,6 +72,9 @@ export default function Login() {
     });
     return (
         <div className={classes.formContainer}>
+            {/* <div className={classes.headerIcon}>
+                <AccountCircleIcon className={classes.headerIcon}/>
+            </div> */}
             <form className={classes.root} noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
                 <div>
                     <TextField 
@@ -92,6 +104,7 @@ export default function Login() {
                         type="submit"
                         color="secondary"
                         className={classes.btn}
+                        onClick={() => history.push('/')}
                         >
                             Login
                     </Button>

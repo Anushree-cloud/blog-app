@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
 import { AccountCircle } from '@material-ui/icons';
 
@@ -45,7 +46,7 @@ import { AccountCircle } from '@material-ui/icons';
                         Blog App
                     </Typography>
                     <div>
-                        <IconButton
+                        {/* <IconButton
                             aria-label="account of current user"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
@@ -53,7 +54,9 @@ import { AccountCircle } from '@material-ui/icons';
                             color="inherit"
                         >
                             <AccountCircle />
-                        </IconButton>
+                        </IconButton> */}
+                        <Button color="inherit" onClick={() => history.push('/login')}>Login</Button>
+                        <Button color="inherit" onClick={() => history.push('/login')}>Logout</Button>
                         <IconButton
                             aria-label="account of current user"
                             aria-controls="menu-appbar"

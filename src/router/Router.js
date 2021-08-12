@@ -46,11 +46,11 @@ export default function Router() {
                             </Layout>
                         </Route>
 
-                        <Route exact component={ErrorPage}/>
-                        
                         <Route exact path='/login'>
                             <Login />
                         </Route>
+
+                        <Route exact component={ErrorPage}/>
                         
                 </Switch>
             </BrowserRouter>
