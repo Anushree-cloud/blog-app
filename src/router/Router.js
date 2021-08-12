@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import BlogList from '../pages/Blog/BlogList'
 import Home from '../pages/Home'
 import Add from '../pages/Blog/Add'
-import Navbar from '../components/Navbar'
+// import Navbar from '../components/Navbar'
+import Layout from '../Layout/Layout'
 import Edit from '../pages/Blog/Edit'
 import Details from '../pages/Blog/Details'
 import ErrorPage from '../pages/Error/ErrorPage'
@@ -13,29 +14,44 @@ export default function Router() {
     return (
         <>
             <BrowserRouter>
-                <Navbar />
-                <Switch >
+                <Switch>
 
-                <Route exact path='/'>
-                    <Home />
-                </Route>
+                        <Route exact path='/'>
+                            <Layout>
+                                <Home />
+                            </Layout>
+                        </Route>
 
-                <Route exact path='/blog'>
-                    <BlogList />
-                </Route>
+                        <Route exact path='/blog'>
+                            <Layout>
+                                <BlogList />
+                            </Layout>
+                        </Route>
 
-                <Route exact path='/blog/add' component={Add} />
+                        <Route exact path='/blog/add'>
+                            <Layout>
+                                <Add />
+                            </Layout>
+                        </Route>
 
-                <Route exact path='/blog/edit/:id' component={Edit} />
+                        <Route exact path='/blog/edit/:id'>
+                            <Layout>
+                                <Edit />
+                            </Layout>
+                        </Route>
+                        
+                        <Route exact path='/blog/details/:id' >
+                            <Layout>
+                                <Details />
+                            </Layout>
+                        </Route>
 
-                <Route exact path='/blog/details/:id' >
-                    <Details />
-                </Route>
-
-                <Route exact path='/login' component={Login} />
-
-                <Route exact component={ErrorPage}/>
-
+                        <Route exact component={ErrorPage}/>
+                        
+                        <Route exact path='/login'>
+                            <Login />
+                        </Route>
+                        
                 </Switch>
             </BrowserRouter>
         </>

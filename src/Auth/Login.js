@@ -27,6 +27,14 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         margin: '2px',
+    },
+    linkContainer: {
+        margin: '5px',
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    btn: {
+        width: '33ch',
     }
   }));
 
@@ -45,14 +53,14 @@ export default function Login() {
     const classes = useStyles()
     const formik = useFormik({
         initialValues: {
-          email: 'abc@gmail.com',
-          password: '12345678',
+            email: 'abc@gmail.com',
+            password: '12345678',
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-          alert(JSON.stringify(values, null, 2));
+            alert(JSON.stringify(values, null, 2));
         },
-      });
+    });
     return (
         <div className={classes.formContainer}>
             <form className={classes.root} noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
@@ -79,17 +87,16 @@ export default function Login() {
                         error={formik.touched.password && Boolean(formik.errors.password)}
                         helperText={formik.touched.password && formik.errors.password}
                     />
-                </div>
-                <div>
                     <Button 
                         variant='contained' 
                         type="submit"
                         color="secondary"
+                        className={classes.btn}
                         >
                             Login
                     </Button>
                 </div>
-                <div>
+                <div className={classes.linkContainer}>
                     <a href='#' className={classes.link}>Forget Password?</a>
                     <a href='#' className={classes.link}>Create new account?</a>
                 </div>

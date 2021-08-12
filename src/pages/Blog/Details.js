@@ -7,11 +7,7 @@ import { useParams, useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 const useStyle = makeStyles(() => ({
-    editButton: {
-        textDecoration: 'none', 
-        color: 'white',
-        width: '5vw',
-    },
+    
     btn: {
         margin: "5px",
     },
@@ -80,10 +76,8 @@ export default function Details() {
                             <p style={{whiteSpace: 'pre-line', textAlign: 'justify'}}>{blog.description}</p>
                             <div className={classes.btnContainer}>
                                 <div className={classes.btnGroup}>
-                                    <Button size="large" variant="contained" color="secondary" className={classes.btn}>
-                                        <Link to={`/blog/edit/${blog.id}`} className={classes.editButton}>
-                                            Edit
-                                        </Link>
+                                    <Button size="large" variant="contained" color="secondary" className={classes.btn} onClick={() => history.push(`/blog/edit/${blog.id}`)}>
+                                        Edit
                                     </Button>
                                     <Button size="large" variant="contained" color="secondary" className={classes.btn} onClick={deleteBlog}>
                                         Delete
