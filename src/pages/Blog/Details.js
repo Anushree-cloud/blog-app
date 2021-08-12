@@ -1,4 +1,5 @@
-import { Button } from '@material-ui/core';
+import { Button, ButtonGroup } from '@material-ui/core';
+import { red } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import React, { useState, useEffect} from 'react'
@@ -13,6 +14,25 @@ const useStyle = makeStyles(() => ({
     },
     btn: {
         margin: "5px",
+    },
+    image: {
+        width: '100%',
+        height: '70vh',
+    },
+    container: {
+        backgroundColor: 'black',
+        margin: '5ch',
+        color: '#888',
+        padding: '20px',
+    },
+    blogName: {
+        borderTop: '3px solid white',
+        borderBottom: '3px solid white',
+        padding: '10px'
+    },
+    btnContainer: {
+        display: 'flex',
+        justifyContent: 'space-between'
     }
 }))
 
@@ -36,7 +56,7 @@ export default function Details() {
     function deleteBlog() {
         axios.delete(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
             console.log(res);
-            history.push('/')
+            history.push('/blog')
         }).catch( error => {
             console.log(error);
         })
@@ -50,16 +70,26 @@ export default function Details() {
                     <h1>Loading...</h1>
                 ) : (
                     <>
-                        <h1>{blog.name}</h1>
-                        <p>{blog.description}</p>
-                        <Button size="large" variant="contained" color="secondary" className={classes.btn}>
-                            <Link to={`/blog/edit/${blog.id}`} className={classes.editButton}>
-                                Edit
-                            </Link>
-                        </Button>
-                        <Button size="large" variant="contained" color="secondary" className={classes.btn} onClick={deleteBlog}>
-                            Delete
-                        </Button>
+                        <div className={classes.container}>
+                            <img src={blog.image_url} className={classes.image} />
+                            <h1 className={classes.blogName}>{blog.name}</h1>
+                            <p style={{whiteSpace: 'pre-line', textAlign: 'justify'}}>{blog.description}</p>
+                            <div className={classes.btnContainer}>
+                                <div className={classes.btnGroup}>
+                                    <Button size="large" variant="contained" color="secondary" className={classes.btn}>
+                                        <Link to={`/blog/edit/${blog.id}`} className={classes.editButton}>
+                                            Edit
+                                        </Link>
+                                    </Button>
+                                    <Button size="large" variant="contained" color="secondary" className={classes.btn} onClick={deleteBlog}>
+                                        Delete
+                                    </Button>
+                                </div>
+                                <Button size="large" variant="contained" color="secondary" className={classes.btn} onClick={() => {history.push('/blog')}}>Go Back</Button>
+                            </div>
+                            
+                            
+                        </div>
                     </>
                 )
             }

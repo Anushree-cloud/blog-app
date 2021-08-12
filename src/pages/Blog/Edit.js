@@ -83,25 +83,25 @@ export default function Edit() {
                             required 
                             label="Name"
                             name="name"
-                            value={formik.values}
+                            value={formik.values.name}
                             id="standard-full-width"
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
                             onChange={formik.handleChange}
                             error={formik.touched.name && Boolean(formik.errors.name)}
-                            helperText={ formik.touched.name && formik.error.name}
+                            helperText={ formik.touched.name && formik.errors.name}
                         />
                         <TextField 
                             id="standard-textarea"
                             label="Description"
                             name="description"
-                            value={formik.values}
+                            value={formik.values.description}
                             multiline
                             fullWidth
                             onChange={formik.handleChange}
                             error={formik.touched.description && Boolean(formik.errors.description)}
-                            helperText={ formik.touched.description && formik.error.description}
+                            helperText={ formik.touched.description && formik.errors.description}
                         />
                         {/* <TextField 
                             required 
@@ -117,14 +117,14 @@ export default function Edit() {
                             required 
                             label="Image URL" 
                             name="image_url"
-                            value={formik.values}
+                            value={formik.values.image_url}
                             id="standard-full-width"
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
                             onChange={formik.handleChange}
                             error={formik.touched.image_url && Boolean(formik.errors.image_url)}
-                            helperText={ formik.touched.image_url && formik.error.image_url}
+                            helperText={ formik.touched.image_url && formik.errors.image_url}
                         />
                         <Button variant="contained" color="secondary" type="submit">Edit</Button>
                     </div>

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import toast, { Toaster } from 'react-hot-toast';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,7 +42,19 @@ export default function Add() {
     const classes = useStyles();
     const history = useHistory();
     const [loading, setLoading] = useState(false)
-
+    const toastAlert = () => {
+        toast.success('Blog has been added successfully 😎', {
+            style: {
+                border: '1px solid #713200',
+                padding: '16px',
+                color: '#713200',
+            },
+            iconTheme: {
+                primary: '#713200',
+                secondary: '#FFFAEE',
+            },
+        });
+    }
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -52,10 +65,9 @@ export default function Add() {
         onSubmit: (values) => {
             createBlog(values)
             setLoading(true)
-            alert('Your Data Has been posted 😇')
-            formik.setFieldValue("name","")
-            formik.setFieldValue("description","")
-            formik.setFieldValue("image_url","")
+            // alert('Your Data Has been posted 😇')
+            toastAlert()
+            formik.resetForm()
         }
     })
 
@@ -73,59 +85,66 @@ export default function Add() {
     return (
         <>
         {!loading ? (
-            <form className={classes.root} autoComplete="off" onSubmit={formik.handleSubmit}>
-                <div>
-                    <TextField 
-                        label="Name"
-                        name="name"
-                        value={formik.values.name}
-                        id="standard-full-width"
-                        style={{ margin: 8 }}
-                        placeholder="Name"
-                        margin="normal"
-                        error={formik.touched.name && Boolean(formik.errors.name)}
-                        helperText={formik.touched.name && formik.errors.name}
-                        onChange={formik.handleChange}
-                    />
-                    <TextField 
-                        id="standard-textarea"
-                        label="Description"
-                        name="description"
-                        value={formik.values.description}
-                        placeholder="Description"
-                        multiline
-                        onChange={formik.handleChange}
-                        error={formik.touched.description && Boolean(formik.errors.description)}
-                        helperText={formik.touched.description && formik.errors.description}
-                        
-                    />
-                    {/* <TextField 
-                        required 
-                        label="Date" 
-                        id="standard-full-width"
-                        style={{ margin: 8 }}
-                        placeholder="Date"
-                        fullWidth
-                        margin="normal"
-                        
-                    /> */}
-                    <TextField 
-                        label="Image URL" 
-                        name="image_url"
-                        value={formik.values.image_url}
-                        id="standard-full-width"
-                        style={{ margin: 8 }}
-                        placeholder="Image URL"
-                        margin="normal"
-                        onChange={formik.handleChange}
-                        error={formik.touched.image_url && Boolean(formik.errors.image_url)}
-                        helperText={formik.touched.image_url && formik.errors.image_url}
-                    />
-                </div>
-                <div>
-                    <Button variant="contained" color="secondary" type="submit">Add Blog</Button>
-                </div>
-            </form>
+            <>
+                <form className={classes.root} autoComplete="off" onSubmit={formik.handleSubmit}>
+                    <div style={{whiteSpace: 'pre-line'}}>
+                        <TextField 
+                            label="Name"
+                            name="name"
+                            value={formik.values.name}
+                            id="standard-full-width"
+                            style={{ margin: 8 }}
+                            placeholder="Name"
+                            margin="normal"
+                            error={formik.touched.name && Boolean(formik.errors.name)}
+                            helperText={formik.touched.name && formik.errors.name}
+                            onChange={formik.handleChange}
+                        />
+                        <TextField 
+                            id="standard-textarea"
+                            label="Description"
+                            
+                            name="description"
+                            value={formik.values.description}
+                            placeholder="Description"
+                            multiline
+                            onChange={formik.handleChange}
+                            error={formik.touched.description && Boolean(formik.errors.description)}
+                            helperText={formik.touched.description && formik.errors.description}
+                            
+                        />
+                        {/* <TextField 
+                            required 
+                            label="Date" 
+                            id="standard-full-width"
+                            style={{ margin: 8 }}
+                            placeholder="Date"
+                            fullWidth
+                            margin="normal"
+                            
+                        /> */}
+                        <TextField 
+                            label="Image URL" 
+                            name="image_url"
+                            value={formik.values.image_url}
+                            id="standard-full-width"
+                            style={{ margin: 8 }}
+                            placeholder="Image URL"
+                            margin="normal"
+                            onChange={formik.handleChange}
+                            error={formik.touched.image_url && Boolean(formik.errors.image_url)}
+                            helperText={formik.touched.image_url && formik.errors.image_url}
+                        />
+                    </div>
+                    <div>
+                        <Button variant="contained" color="secondary" type="submit">Add Blog</Button>
+                    </div>
+                </form>
+                <Toaster
+                    position="top-center"
+                    reverseOrder={false} 
+                />
+            </>
         ) : (
             <h1>Loading....</h1>
         )
