@@ -11,12 +11,16 @@ const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
         margin: theme.spacing(1),
+        width: '80ch',
         },
     },
     buttons: {
         '& > *': {
-            margin: theme.spacing(1),
+            margin: theme.spacing(2),
         },
+    },
+    btn: {
+        margin: "5px",
     },
     input: {
         display: 'none',
@@ -24,10 +28,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const validations = yup.object({
-    name: yup.string('Type the Blog Name').required('Blog Name is Required'),
-    description: yup.string('Type Blog Description').required('Blog Description is required'),
-    image_url: yup.string('Type the Image URL').required('Image URL is required')
-})
+    name: yup
+        .string('Enter Blog-name')
+        .required('Blog-name is required'),
+    description: yup
+        .string('Enter Blog Description')
+        .min(10, 'Blog should be of minimum 15 characters length')
+        .required('Description is required'),
+    image_url: yup
+        .string('Enter Image URL')
+        .required('Image URL is required'),
+});
 
 export default function Edit() {
     const classes = useStyles();
@@ -80,13 +91,11 @@ export default function Edit() {
                 <form className={classes.root} autoComplete="off" onSubmit={formik.handleSubmit}>
                     <div>
                         <TextField 
-                            required 
                             label="Name"
                             name="name"
                             value={formik.values.name}
                             id="standard-full-width"
                             style={{ margin: 8 }}
-                            fullWidth
                             margin="normal"
                             onChange={formik.handleChange}
                             error={formik.touched.name && Boolean(formik.errors.name)}
@@ -98,7 +107,6 @@ export default function Edit() {
                             name="description"
                             value={formik.values.description}
                             multiline
-                            fullWidth
                             onChange={formik.handleChange}
                             error={formik.touched.description && Boolean(formik.errors.description)}
                             helperText={ formik.touched.description && formik.errors.description}
@@ -114,19 +122,20 @@ export default function Edit() {
                             
                         /> */}
                         <TextField 
-                            required 
                             label="Image URL" 
                             name="image_url"
                             value={formik.values.image_url}
                             id="standard-full-width"
                             style={{ margin: 8 }}
-                            fullWidth
                             margin="normal"
                             onChange={formik.handleChange}
                             error={formik.touched.image_url && Boolean(formik.errors.image_url)}
                             helperText={ formik.touched.image_url && formik.errors.image_url}
                         />
-                        <Button variant="contained" color="secondary" type="submit">Edit</Button>
+                    </div>
+                    <div>
+                        <Button variant="contained" color="secondary" type="submit" className={classes.btn}>Submit</Button>
+                        <Button variant="contained" color="secondary" onClick={() => history.push('/blog')} className={classes.btn}>Cancel</Button>
                     </div>
                 </form>
             )

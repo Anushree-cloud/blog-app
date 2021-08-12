@@ -1,6 +1,6 @@
-import { Button, ButtonGroup } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { ArrowBackIos } from '@material-ui/icons';
 import axios from 'axios';
 import React, { useState, useEffect} from 'react'
 import { useParams, useHistory } from 'react-router';
@@ -85,7 +85,9 @@ export default function Details() {
                                         Delete
                                     </Button>
                                 </div>
-                                <Button size="large" variant="contained" color="secondary" className={classes.btn} onClick={() => {history.push('/blog')}}>Go Back</Button>
+                                <Button size="large" variant="contained" color="secondary" className={classes.btn} onClick={() => {history.push('/blog')}}>
+                                    <ArrowBackIos /> Go Back
+                                </Button>
                             </div>
                             
                             

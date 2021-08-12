@@ -65,7 +65,6 @@ export default function Add() {
         onSubmit: (values) => {
             createBlog(values)
             setLoading(true)
-            // alert('Your Data Has been posted 😇')
             toastAlert()
             formik.resetForm()
         }
@@ -87,7 +86,7 @@ export default function Add() {
         {!loading ? (
             <>
                 <form className={classes.root} autoComplete="off" onSubmit={formik.handleSubmit}>
-                    <div style={{whiteSpace: 'pre-line'}}>
+                    <div>
                         <TextField 
                             label="Name"
                             name="name"
