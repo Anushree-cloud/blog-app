@@ -21,14 +21,18 @@ const useStyle = makeStyles(() => ({
     },
     container: {
         backgroundColor: 'black',
-        margin: '5ch',
+        margin: '1ch 5ch 5ch 5ch',
         color: '#888',
         padding: '20px',
+        borderRadius: '30px',
     },
     blogName: {
-        borderTop: '3px solid white',
-        borderBottom: '3px solid white',
-        padding: '10px'
+        borderTop: '3px solid #f50057',
+        borderBottom: '3px solid #f50057',
+        padding: '10px',
+        marginTop: '0',
+        color: 'white',
+        textShadow: '0 0 15px #f50057'
     },
     btnContainer: {
         display: 'flex',
@@ -71,8 +75,8 @@ export default function Details() {
                 ) : (
                     <>
                         <div className={classes.container}>
-                            <img src={blog.image_url} className={classes.image} />
                             <h1 className={classes.blogName}>{blog.name}</h1>
+                            <img src={blog.image_url} className={classes.image} />
                             <p style={{whiteSpace: 'pre-line', textAlign: 'justify'}}>{blog.description}</p>
                             <div className={classes.btnContainer}>
                                 <div className={classes.btnGroup}>

@@ -16,9 +16,12 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        color: 'white',
+        backgroundColor: 'black'
     },
     media: {
         height: 140,
+        borderBottom: '3px solid white',
     },
     editButton: {
         textDecoration: 'none', 
