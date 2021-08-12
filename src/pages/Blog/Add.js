@@ -41,15 +41,6 @@ export default function Add() {
     const classes = useStyles();
     const history = useHistory();
     const [loading, setLoading] = useState(false)
-    const [postBlog, setPostBlog] = useState(
-        {
-            name: "",
-            description: "",
-            image_url: ""
-        }
-    );
-
-    const { name, description, image_url } = postBlog
 
     const formik = useFormik({
         initialValues: {
@@ -58,42 +49,25 @@ export default function Add() {
             image_url: ''
         },
         validationSchema: validationSchema,
-        onSubmit: (e) => {
-            e.preventDefault()
-            console.log(postBlog);
-            createBlog()
+        onSubmit: (values) => {
+            createBlog(values)
             setLoading(true)
-            history.push('/')
+            alert('Your Data Has been posted 😇')
+            formik.setFieldValue("name","")
+            formik.setFieldValue("description","")
+            formik.setFieldValue("image_url","")
         }
     })
-    console.log(formik);
-    const inputHandler = (e) => {
-        setPostBlog((previousBlogData) => {
-            return {
-                ...previousBlogData,
-                [e.target.name]: e.target.value
-            }
-        })
-    }
 
-    function createBlog() {
+    function createBlog(values) {
         setLoading(true)
-        axios.post(`http://localhost:5000/v1/api/blogs`, postBlog).then((res) => {
+        axios.post(`http://localhost:5000/v1/api/blogs`, values).then((res) => {
             console.log(res);
             setLoading(false)
         }).catch((error) => {
             console.log(error);
         })
     }
-    
-    // const submitBlogHandler = (e) => {
-    //     e.preventDefault()
-    //     console.log(postBlog);
-    //     createBlog()
-    //     setLoading(true)
-    //     history.push('/')
-    // }
-
     
 
     return (
@@ -104,23 +78,23 @@ export default function Add() {
                     <TextField 
                         label="Name"
                         name="name"
-                        value={name}
+                        value={formik.values.name}
                         id="standard-full-width"
                         style={{ margin: 8 }}
                         placeholder="Name"
                         margin="normal"
                         error={formik.touched.name && Boolean(formik.errors.name)}
                         helperText={formik.touched.name && formik.errors.name}
-                        onChange={inputHandler}
+                        onChange={formik.handleChange}
                     />
                     <TextField 
                         id="standard-textarea"
                         label="Description"
                         name="description"
-                        value={description}
+                        value={formik.values.description}
                         placeholder="Description"
                         multiline
-                        onChange={inputHandler}
+                        onChange={formik.handleChange}
                         error={formik.touched.description && Boolean(formik.errors.description)}
                         helperText={formik.touched.description && formik.errors.description}
                         
@@ -138,12 +112,12 @@ export default function Add() {
                     <TextField 
                         label="Image URL" 
                         name="image_url"
-                        value={image_url}
+                        value={formik.values.image_url}
                         id="standard-full-width"
                         style={{ margin: 8 }}
                         placeholder="Image URL"
                         margin="normal"
-                        onChange={inputHandler}
+                        onChange={formik.handleChange}
                         error={formik.touched.image_url && Boolean(formik.errors.image_url)}
                         helperText={formik.touched.image_url && formik.errors.image_url}
                     />

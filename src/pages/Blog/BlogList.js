@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     rootContainer: {
         display: "flex",
         flexDirection: 'row',
+        flexWrap: 'wrap',
         marginTop: '10px',
         justifyContent:'center',
     }

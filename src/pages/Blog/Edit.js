@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import { useFormik } from 'formik';
+import * as yup from 'yup'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,59 +23,52 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const validations = yup.object({
+    name: yup.string('Type the Blog Name').required('Blog Name is Required'),
+    description: yup.string('Type Blog Description').required('Blog Description is required'),
+    image_url: yup.string('Type the Image URL').required('Image URL is required')
+})
+
 export default function Edit() {
     const classes = useStyles();
     const { id } = useParams();
     const history = useHistory();
     const [loading, setLoading] = useState(false)
-    // const [previosBlogContent, setPreviousBlogContent] = useState({
-    //     name: "",
-    //     description: "",
-    //     image_url: ""
-    // })
-    const [newBlog, setNewBlog] = useState({
-        name: "",
-        description: "",
-        image_url: "",
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            description: '',
+            image_url: '',
+        },
+        validationSchema: validations,
+        onSubmit: (values) => {
+            editBlog(values)
+            setLoading(true)
+            history.push(`/blog/details/${id}`)
+        }
     })
     
     useEffect(() => {
         axios.get(`http://localhost:5000/v1/api/blogs/${id}`).then( res => {
-            setNewBlog(res.data.data)
-            // console.log("res.data.data: ", res.data.data);
+            console.log("res.data.data: ", res.data.data);
+            const { name, description, image_url } = res.data.data
+            formik.setFieldValue('name', name)
+            formik.setFieldValue('description', description)
+            formik.setFieldValue('image_url', image_url)
         }).catch( error => {
             console.log(error);
         })
     }, [])
 
-
-    const inputHandler = (e) => {
-        setNewBlog((previousBlogData) => {
-            return (
-                {
-                    ...previousBlogData,
-                    [e.target.name]: e.target.value
-                }
-            )
-        })
-    }
-
-    function editBlog() { 
+    function editBlog(values) { 
         setLoading(true)
         
-        axios.put(`http://localhost:5000/v1/api/blogs/${id}`, newBlog).then( res => {
+        axios.put(`http://localhost:5000/v1/api/blogs/${id}`, values).then( res => {
             console.log(res);
             setLoading(false)
         }).catch( error => {
             console.log(error);
         })
-    }
-
-    const editBlogHandler = (e) => {
-        e.preventDefault()
-        editBlog()
-        setLoading(true)
-        history.push(`/blog/details/${id}`)
     }
     
     return (
@@ -82,27 +77,31 @@ export default function Edit() {
             loading ? (
                 <h1>Loading...</h1>
             ) : (
-                <form className={classes.root} autoComplete="off" onSubmit={editBlogHandler}>
+                <form className={classes.root} autoComplete="off" onSubmit={formik.handleSubmit}>
                     <div>
                         <TextField 
                             required 
                             label="Name"
                             name="name"
-                            value={newBlog.name}
+                            value={formik.values}
                             id="standard-full-width"
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
-                            onChange={inputHandler}
+                            onChange={formik.handleChange}
+                            error={formik.touched.name && Boolean(formik.errors.name)}
+                            helperText={ formik.touched.name && formik.error.name}
                         />
                         <TextField 
                             id="standard-textarea"
                             label="Description"
                             name="description"
-                            value={newBlog.description}
+                            value={formik.values}
                             multiline
                             fullWidth
-                            onChange={inputHandler}
+                            onChange={formik.handleChange}
+                            error={formik.touched.description && Boolean(formik.errors.description)}
+                            helperText={ formik.touched.description && formik.error.description}
                         />
                         {/* <TextField 
                             required 
@@ -118,12 +117,14 @@ export default function Edit() {
                             required 
                             label="Image URL" 
                             name="image_url"
-                            value={newBlog.image_url}
+                            value={formik.values}
                             id="standard-full-width"
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
-                            onChange={inputHandler}
+                            onChange={formik.handleChange}
+                            error={formik.touched.image_url && Boolean(formik.errors.image_url)}
+                            helperText={ formik.touched.image_url && formik.error.image_url}
                         />
                         <Button variant="contained" color="secondary" type="submit">Edit</Button>
                     </div>
