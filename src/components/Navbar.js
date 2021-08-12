@@ -8,6 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withRouter } from 'react-router-dom';
+import { AccountCircle } from '@material-ui/icons';
 
     const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,6 +45,15 @@ import { withRouter } from 'react-router-dom';
                         Blog App
                     </Typography>
                     <div>
+                        <IconButton
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={() => history.push('/login')}
+                            color="inherit"
+                        >
+                            <AccountCircle />
+                        </IconButton>
                         <IconButton
                             aria-label="account of current user"
                             aria-controls="menu-appbar"
