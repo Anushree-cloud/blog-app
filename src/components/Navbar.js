@@ -29,7 +29,7 @@ import { AccountCircle } from '@material-ui/icons';
         const classes = useStyles();
         const [anchorEl, setAnchorEl] = React.useState(null);
         const open = Boolean(anchorEl);
-
+        console.log(props);
         const handleMenu = (event) => {
             setAnchorEl(event.currentTarget);
         };
@@ -48,7 +48,7 @@ import { AccountCircle } from '@material-ui/icons';
                         </Typography>
                         <div>
                             {
-                                props.auth.isloggedin ? (
+                                props.auth.isLoggedin ? (
                                     <Button 
                                         color="inherit" 
                                         onClick={() => {
