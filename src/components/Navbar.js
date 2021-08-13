@@ -10,7 +10,6 @@ import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
 import { AccountCircle } from '@material-ui/icons';
-
     const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -18,9 +17,10 @@ import { AccountCircle } from '@material-ui/icons';
     menuButton: {
         marginRight: theme.spacing(2),
     },
-    title: {
-        flexGrow: 1,
-    },
+    toolbar: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    }
     }));
 
     function Navbar(props) {
@@ -41,51 +41,56 @@ import { AccountCircle } from '@material-ui/icons';
         return (
             <div className={classes.root}>
                 <AppBar position="static" color="secondary">
-                    <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
-                        Blog App
-                    </Typography>
-                    <div>
-                        {/* <IconButton
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={() => history.push('/login')}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton> */}
-                        <Button color="inherit" onClick={() => history.push('/login')}>Login</Button>
-                        <Button color="inherit" onClick={() => history.push('/login')}>Logout</Button>
-                        <IconButton
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleMenu}
-                            color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                            }}
-                            open={open}
-                            onClose={ () => {setAnchorEl(null)}} 
-                        >
-                            <MenuItem onClick={() => {handleClose('/')}}>Home</MenuItem>
-                            <MenuItem onClick={() => {handleClose('/blog/add')}}>Add Blog</MenuItem>
-                        </Menu>
-                    </div>
-
+                    <Toolbar className={classes.toolbar}>
+                        <Typography edge="start" variant="h6" className={classes.title}>
+                            📚 Blog App 
+                        </Typography>
+                        <div>
+                            {
+                                props.auth.isloggedin ? (
+                                    <Button 
+                                        color="inherit" 
+                                        onClick={() => {
+                                            history.push('/login')
+                                            props.logout()
+                                        }}
+                                        >
+                                            Logout
+                                        </Button>
+                                ) : (
+                                    <Button color="inherit" onClick={() => history.push('/login')}>Login</Button>
+                                )
+                            }
+                            
+                            
+                            <IconButton
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleMenu}
+                                color="inherit"
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                                }}
+                                open={open}
+                                onClose={ () => {setAnchorEl(null)}} 
+                            >
+                                <MenuItem onClick={() => {handleClose('/home')}}>Home</MenuItem>
+                                <MenuItem onClick={() => {handleClose('/blog/add')}}>Add Blog</MenuItem>
+                            </Menu>
+                        </div>
                     </Toolbar>
                 </AppBar>
             </div>

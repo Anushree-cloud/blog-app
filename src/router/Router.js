@@ -10,44 +10,44 @@ import Details from '../pages/Blog/Details'
 import ErrorPage from '../pages/Error/ErrorPage'
 import Login from '../Auth/Login'
 
-export default function Router() {
+export default function Router({ auth, login, logout }) {
     return (
         <>
             <BrowserRouter>
                 <Switch>
 
                         <Route exact path='/'>
-                            <Layout>
+                            <Layout auth={auth} login={login} logout={logout} >
                                 <Home />
                             </Layout>
                         </Route>
 
                         <Route exact path='/blog'>
-                            <Layout>
+                            <Layout auth={auth} login={login} logout={logout}>
                                 <BlogList />
                             </Layout>
                         </Route>
 
                         <Route exact path='/blog/add'>
-                            <Layout>
+                            <Layout auth={auth} login={login} logout={logout}>
                                 <Add />
                             </Layout>
                         </Route>
 
                         <Route exact path='/blog/edit/:id'>
-                            <Layout>
+                            <Layout auth={auth} login={login} logout={logout}>
                                 <Edit />
                             </Layout>
                         </Route>
                         
                         <Route exact path='/blog/details/:id' >
-                            <Layout>
+                            <Layout auth={auth} login={login} logout={logout}>
                                 <Details />
                             </Layout>
                         </Route>
 
                         <Route exact path='/login'>
-                            <Login />
+                            <Login auth={auth} login={login} />
                         </Route>
 
                         <Route exact component={ErrorPage}/>
