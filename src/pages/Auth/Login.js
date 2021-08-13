@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         width: 'min-content',
         backgroundColor: '#b2fcfc',
-        marginLeft: '10vw',
+        marginLeft: '12vw',
     },
     input: {
         margin: '5px',
@@ -71,7 +71,11 @@ const validationSchema = yup.object({
     password: yup
         .string('Enter your password')
         .min(8, 'Password should be of minimum 8 characters length')
-        .required('Password is required'),
+        .required('Password is required')
+        .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            "Must Contain uppercase, lowercase, special characters and numbers"
+        ),
 });
 
 export default function Login({ auth, login }) {
@@ -79,8 +83,8 @@ export default function Login({ auth, login }) {
     const history = useHistory()
     const formik = useFormik({
         initialValues: {
-            email: 'abc@gmail.com',
-            password: '12345678',
+            email: '',
+            password: '',
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
@@ -117,7 +121,8 @@ export default function Login({ auth, login }) {
                         </div>
                         <div>
                             <TextField 
-                                id="outlined-basic" 
+                                id="outlined-basic"
+                                type='email'
                                 name="email"
                                 label="Email" 
                                 variant="outlined" 
@@ -129,6 +134,7 @@ export default function Login({ auth, login }) {
                             />
                             <TextField 
                                 id="outlined-basic" 
+                                type='password'
                                 name="password"
                                 label="Password"  
                                 variant="outlined" 

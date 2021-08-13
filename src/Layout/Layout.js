@@ -1,17 +1,20 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router'
 import Navbar from '../components/Navbar'
 
 export default function Layout(props) {
-    const history = useHistory()
+    // const history = useHistory()
     return (
         <>
-            <Navbar auth={props.auth} login={props.login} logout={props.logout}/>
+            
             {
                 props.auth.isLoggedin ? (
-                    props.children
+                    <>
+                        <Navbar auth={props.auth} login={props.login} logout={props.logout}/>
+                        { props.children }
+                    </>
                 ) : (
-                    history.push('/login')
+                    <Redirect push to='/login' />
                 )
             }
             
