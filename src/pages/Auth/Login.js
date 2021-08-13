@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         width: 'min-content',
         backgroundColor: '#b2fcfc',
-        marginLeft: '10vw',
+        // marginLeft: '10vw',
     },
     input: {
         margin: '5px',
@@ -59,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
     },
     btn: {
         width: '22vw',
-    }
+    },  alignItems: 'center',
+    
 }));
 
 const validationSchema = yup.object({
@@ -110,52 +111,54 @@ export default function Login({ auth, login }) {
                 <h3>✍ Add Your Blogs Here.</h3>
             </div>
             <div className={classes.formContainer}>
-                <div className={classes.headerIcon}>
-                    <AccountCircleIcon className={classes.headerIcon}/>
-                </div>
                 <form className={classes.root} noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
-                    <div>
-                        <TextField 
-                            id="outlined-basic" 
-                            name="email"
-                            label="Email" 
-                            variant="outlined" 
-                            className={classes.input}
-                            value={formik.values.email}
-                            onChange={formik.handleChange}
-                            error={formik.touched.email && Boolean(formik.errors.email)}
-                            helperText={formik.touched.email && formik.errors.email}
-                        />
-                        <TextField 
-                            id="outlined-basic" 
-                            name="password"
-                            label="Password"  
-                            variant="outlined" 
-                            className={classes.input}
-                            value={formik.values.password}
-                            onChange={formik.handleChange}
-                            error={formik.touched.password && Boolean(formik.errors.password)}
-                            helperText={formik.touched.password && formik.errors.password}
-                        />
-                        <Button 
-                            variant='contained' 
-                            type="submit"
-                            color="secondary"
-                            className={classes.btn}
-                            >
-                                Login
-                        </Button>
+                        <div className={classes.headerIcon}>
+                            <AccountCircleIcon className={classes.headerIcon}/>
+                        </div>
+                        <div>
+                            <TextField 
+                                id="outlined-basic" 
+                                name="email"
+                                label="Email" 
+                                variant="outlined" 
+                                className={classes.input}
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                error={formik.touched.email && Boolean(formik.errors.email)}
+                                helperText={formik.touched.email && formik.errors.email}
+                            />
+                            <TextField 
+                                id="outlined-basic" 
+                                name="password"
+                                label="Password"  
+                                variant="outlined" 
+                                className={classes.input}
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                error={formik.touched.password && Boolean(formik.errors.password)}
+                                helperText={formik.touched.password && formik.errors.password}
+                            />
+                                <Button 
+                                    variant='contained' 
+                                    type="submit"
+                                    color="secondary"
+                                    className={classes.btn}
+                                    >
+                                        Login
+                                </Button>
+                            </div>
+                            <div className={classes.linkContainer}>
+                                <a href='#' className={classes.link}>Forget Password?</a>
+                                <a href='#' className={classes.link}>Create new account?</a>
+                            </div>
+                        </form>
                     </div>
-                    <div className={classes.linkContainer}>
-                        <a href='#' className={classes.link}>Forget Password?</a>
-                        <a href='#' className={classes.link}>Create new account?</a>
-                    </div>
-                </form>
-                <Toaster
-                    position="top-center"
-                    reverseOrder={false} 
-                />
-            </div>
+
+            <Toaster
+                position="top-center"
+                reverseOrder={false} 
+            />
+            
         </div>
     )
 }

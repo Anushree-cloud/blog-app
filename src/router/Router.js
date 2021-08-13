@@ -18,7 +18,7 @@ export default function Router({ auth, login, logout }) {
 
                         <Route exact path='/'>
                             <Layout auth={auth} login={login} logout={logout} >
-                                <Home auth={auth} />
+                                <Home />
                             </Layout>
                         </Route>
 
