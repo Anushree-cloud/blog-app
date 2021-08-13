@@ -9,11 +9,21 @@ function App() {
   })
 
   function login() {
-    setAuth({ isLoggedin: true})
+    setAuth((previousProps) => {
+      return({
+        ...previousProps,
+        isLoggedin: true
+      })
+    })
   }
 
   function logout() {
-    setAuth({ isLoggedin: false})
+    setAuth((previousProps) => {
+      return({
+        ...previousProps,
+        isLoggedin: false
+      })
+    })
   }
   console.log(auth);
   return (

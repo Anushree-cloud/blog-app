@@ -8,7 +8,7 @@ import Layout from '../Layout/Layout'
 import Edit from '../pages/Blog/Edit'
 import Details from '../pages/Blog/Details'
 import ErrorPage from '../pages/Error/ErrorPage'
-import Login from '../Auth/Login'
+import Login from '../pages/Auth/Login'
 
 export default function Router({ auth, login, logout }) {
     return (
@@ -18,7 +18,7 @@ export default function Router({ auth, login, logout }) {
 
                         <Route exact path='/'>
                             <Layout auth={auth} login={login} logout={logout} >
-                                <Home />
+                                <Home auth={auth} />
                             </Layout>
                         </Route>
 

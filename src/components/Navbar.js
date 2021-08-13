@@ -49,48 +49,51 @@ import { AccountCircle } from '@material-ui/icons';
                         <div>
                             {
                                 props.auth.isLoggedin ? (
-                                    <Button 
-                                        color="inherit" 
-                                        onClick={() => {
-                                            history.push('/login')
-                                            props.logout()
-                                        }}
-                                        >
-                                            Logout
+                                    <>
+                                        <Button 
+                                            color="inherit" 
+                                            onClick={() => {
+                                                history.push('/')
+                                                props.logout()
+                                            }}
+                                            >
+                                                Logout
                                         </Button>
+                                        <IconButton
+                                            aria-label="account of current user"
+                                            aria-controls="menu-appbar"
+                                            aria-haspopup="true"
+                                            onClick={handleMenu}
+                                            color="inherit"
+                                        >
+                                            <MenuIcon />
+                                        </IconButton>
+                                        <Menu
+                                            id="menu-appbar"
+                                            anchorEl={anchorEl}
+                                            anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                            }}
+                                            keepMounted
+                                            transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                            }}
+                                            open={open}
+                                            onClose={ () => {setAnchorEl(null)}} 
+                                        >
+                                            <MenuItem onClick={() => {handleClose('/')}}>Home</MenuItem>
+                                            <MenuItem onClick={() => {handleClose('/blog/add')}}>Add Blog</MenuItem>
+                                        </Menu>
+                                    </>
                                 ) : (
                                     <Button color="inherit" onClick={() => history.push('/login')}>Login</Button>
                                 )
                             }
                             
                             
-                            <IconButton
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={handleMenu}
-                                color="inherit"
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                                }}
-                                open={open}
-                                onClose={ () => {setAnchorEl(null)}} 
-                            >
-                                <MenuItem onClick={() => {handleClose('/home')}}>Home</MenuItem>
-                                <MenuItem onClick={() => {handleClose('/blog/add')}}>Add Blog</MenuItem>
-                            </Menu>
+                            
                         </div>
                     </Toolbar>
                 </AppBar>
