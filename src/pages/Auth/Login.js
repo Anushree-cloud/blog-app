@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         width: 'min-content',
         backgroundColor: '#b2fcfc',
-        // marginLeft: '10vw',
+        marginLeft: '10vw',
     },
     input: {
         margin: '5px',
