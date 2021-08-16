@@ -36,9 +36,8 @@ export const AuthProvider = (props) => {
                 })
             })
         }
-        else{
-            toast('Invalid User or Password!')
-        }
+        console.log(users);
+        console.log(auth);
     }
     
     function logout() {
