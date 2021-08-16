@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
+import { AuthProvider } from '../ContextProvider'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +12,8 @@ import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
 import { AccountCircle } from '@material-ui/icons';
+
+
     const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -39,6 +42,8 @@ import { AccountCircle } from '@material-ui/icons';
             setAnchorEl(null);
         };
 
+        const { auth, logout } = useContext(AuthProvider)
+
         return (
             <div className={classes.root}>
                 <AppBar position="static" color="secondary">
@@ -48,13 +53,13 @@ import { AccountCircle } from '@material-ui/icons';
                         </Typography>
                         <div>
                             {
-                                props.auth.isLoggedin ? (
+                                auth.isLoggedin ? (
                                     <>
                                         <Button 
                                             color="inherit" 
                                             onClick={() => {
                                                 history.push('/')
-                                                props.logout()
+                                                logout()
                                             }}
                                             >
                                                 Logout

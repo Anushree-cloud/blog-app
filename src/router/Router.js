@@ -10,44 +10,44 @@ import Details from '../pages/Blog/Details'
 import ErrorPage from '../pages/Error/ErrorPage'
 import Login from '../pages/Auth/Login'
 
-export default function Router({ auth, login, logout }) {
+export default function Router() {
     return (
         <>
             <BrowserRouter>
                 <Switch>
 
                         <Route exact path='/'>
-                            <Layout auth={auth} login={login} logout={logout} >
+                            <Layout>
                                 <Home />
                             </Layout>
                         </Route>
 
                         <Route exact path='/blog'>
-                            <Layout auth={auth} login={login} logout={logout}>
+                            <Layout >
                                 <BlogList />
                             </Layout>
                         </Route>
 
                         <Route exact path='/blog/add'>
-                            <Layout auth={auth} login={login} logout={logout}>
+                            <Layout >
                                 <Add />
                             </Layout>
                         </Route>
 
                         <Route exact path='/blog/edit/:id'>
-                            <Layout auth={auth} login={login} logout={logout}>
+                            <Layout >
                                 <Edit />
                             </Layout>
                         </Route>
                         
                         <Route exact path='/blog/details/:id' >
-                            <Layout auth={auth} login={login} logout={logout}>
+                            <Layout >
                                 <Details />
                             </Layout>
                         </Route>
 
                         <Route exact path='/login'>
-                            <Login auth={auth} login={login} />
+                            <Login />
                         </Route>
 
                         <Route exact component={ErrorPage}/>

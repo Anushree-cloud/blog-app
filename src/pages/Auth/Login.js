@@ -5,7 +5,8 @@ import { useHistory } from 'react-router';
 import { makeStyles } from '@material-ui/styles'
 import { useFormik } from 'formik';
 import * as yup from 'yup'
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthProvider } from '../../ContextProvider';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,7 +79,8 @@ const validationSchema = yup.object({
         ),
 });
 
-export default function Login({ auth, login }) {
+export default function Login() {
+    const { login } = useContext(AuthProvider)
     const classes = useStyles()
     const history = useHistory()
     const formik = useFormik({

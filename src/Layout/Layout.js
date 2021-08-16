@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useContext} from 'react'
 import { Redirect } from 'react-router'
 import Navbar from '../components/Navbar'
+import { AuthProvider } from '../ContextProvider'
 
 export default function Layout(props) {
-    // const history = useHistory()
+    const { auth } = useContext(AuthProvider)
     return (
         <>
             
             {
-                props.auth.isLoggedin ? (
+                auth.isLoggedin ? (
                     <>
-                        <Navbar auth={props.auth} login={props.login} logout={props.logout}/>
+                        <Navbar />
                         { props.children }
                     </>
                 ) : (
