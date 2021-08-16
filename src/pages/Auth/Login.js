@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/styles'
 import { useFormik } from 'formik';
 import * as yup from 'yup'
 import React, { useContext } from 'react'
-import { AuthContext } from '../../ContextProvider';
+import { AuthContext } from '../../Context/auth';
 
 const useStyles = makeStyles((theme) => ({
     root: {

@@ -1,14 +1,14 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import BlogList from '../pages/Blog/BlogList'
-import Home from '../pages/Home'
-import Add from '../pages/Blog/Add'
+import BlogList from '../pages/blog/BlogList'
+import Home from '../pages/home'
+import Add from '../pages/blog/Add'
 // import Navbar from '../components/Navbar'
-import Layout from '../Layout/Layout'
-import Edit from '../pages/Blog/Edit'
-import Details from '../pages/Blog/Details'
-import ErrorPage from '../pages/Error/ErrorPage'
-import Login from '../pages/Auth/Login'
+import Layout from '../layout/Layout'
+import Edit from '../pages/blog/Edit'
+import Details from '../pages/blog/Details'
+import ErrorPage from '../pages/error/ErrorPage'
+import Login from '../pages/auth/Login'
 
 export default function Router() {
     return (
