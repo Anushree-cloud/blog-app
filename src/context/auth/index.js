@@ -14,30 +14,51 @@ export const AuthProvider = (props) => {
             name: 'Thor',
             email: 'thor@asgard.com',
             password: 'Aabc!123',
+            userId: 1,
         },
         {
             name: 'Loki',
             email: 'loki@asgard.com',
             password: 'Aabc!123',
+            userId: 2,
         },
     ]
 
-    function login(email, password) {
-        let authCheck = users.find((value) => {
-            return (value.email === email) && (value.password === password) 
+    function checkAuth(userId) { 
+        let user = localStorage.getItem('user')
+        // console.log(JSON.parse(user));
+        let currentUser = user.find((value) => {
+            return (value.id === userId) 
         })
-        console.log(authCheck);
-        if(authCheck){
+        if(user){
             setAuth((previousProps) => {
                 return({
                     ...previousProps,
                     isLoggedin: true,
-                    user: authCheck,
+                    user: currentUser,
                 })
             })
         }
-        console.log(users);
-        console.log(auth);
+    }
+
+
+    function login(email, password) {
+        let currentUser = users.find((value) => {
+            return (value.email === email) && (value.password === password) 
+        })
+        console.log(currentUser);
+        if(currentUser){
+            setAuth((previousProps) => {
+                return({
+                    ...previousProps,
+                    isLoggedin: true,
+                    user: currentUser,
+                })
+            })
+            localStorage.setItem('user', JSON.stringify(currentUser))
+            checkAuth(currentUser.userId)
+            return Boolean(currentUser);
+        }
     }
     
     function logout() {
@@ -47,6 +68,7 @@ export const AuthProvider = (props) => {
                 isLoggedin: false
             })
         })
+        localStorage.removeItem('user')
     }    
 
     return (
