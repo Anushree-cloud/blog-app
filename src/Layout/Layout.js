@@ -1,10 +1,10 @@
 import React, { useContext} from 'react'
 import { Redirect } from 'react-router'
 import Navbar from '../components/Navbar'
-import { AuthProvider } from '../ContextProvider'
+import { AuthContext } from '../ContextProvider'
 
 export default function Layout(props) {
-    const { auth } = useContext(AuthProvider)
+    const { auth } = useContext(AuthContext)
     return (
         <>
             

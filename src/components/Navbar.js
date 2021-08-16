@@ -1,7 +1,7 @@
 import React, { useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
-import { AuthProvider } from '../ContextProvider'
+import { AuthContext } from '../ContextProvider'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -42,7 +42,7 @@ import { AccountCircle } from '@material-ui/icons';
             setAnchorEl(null);
         };
 
-        const { auth, logout } = useContext(AuthProvider)
+        const { auth, logout } = useContext(AuthContext)
 
         return (
             <div className={classes.root}>
