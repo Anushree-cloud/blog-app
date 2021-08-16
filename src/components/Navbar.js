@@ -55,8 +55,8 @@ import { AccountCircle } from '@material-ui/icons';
                             {
                                 auth.isLoggedin ? (
                                     <>
-                                        <Typography>
-                                            Welcome 
+                                        <Typography edge="start" variant="h6" className={classes.title}>
+                                            Welcome {auth.user.name}
                                         </Typography>
                                         <IconButton
                                             aria-label="account of current user"
