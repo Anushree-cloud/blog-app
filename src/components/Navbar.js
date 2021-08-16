@@ -1,7 +1,7 @@
 import React, { useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
-import { AuthContext } from '../Context/auth'
+import { AuthContext } from '../context/auth'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';

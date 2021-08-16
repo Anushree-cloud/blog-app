@@ -5,7 +5,18 @@ export const AuthContext = createContext()
 export const AuthProvider = (props) => {
     const [auth, setAuth] = useState({
         isLoggedin: false,
-        user:{},
+        user: [
+            {
+                name: 'Thor',
+                email: 'thor@asgard.com',
+                password: 'Aabc!123',
+            },
+            {
+                name: 'Loki',
+                email: 'loki@asgard.com',
+                password: 'Aabc!123',
+            },
+        ],
     })
 
     function login() {

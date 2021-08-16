@@ -1,7 +1,6 @@
 import './App.css';
 import Router from './router/Router';
-import { useState } from 'react'
-import { AuthProvider } from './Context/auth';
+import { AuthProvider } from './context/auth'
 
 function App() {
   return (
