@@ -55,15 +55,9 @@ import { AccountCircle } from '@material-ui/icons';
                             {
                                 auth.isLoggedin ? (
                                     <>
-                                        <Button 
-                                            color="inherit" 
-                                            onClick={() => {
-                                                history.push('/')
-                                                logout()
-                                            }}
-                                            >
-                                                Logout
-                                        </Button>
+                                        <Typography>
+                                            Welcome 
+                                        </Typography>
                                         <IconButton
                                             aria-label="account of current user"
                                             aria-controls="menu-appbar"
@@ -90,6 +84,12 @@ import { AccountCircle } from '@material-ui/icons';
                                         >
                                             <MenuItem onClick={() => {handleClose('/')}}>Home</MenuItem>
                                             <MenuItem onClick={() => {handleClose('/blog/add')}}>Add Blog</MenuItem>
+                                            <MenuItem onClick={() => {
+                                                history.push('/')
+                                                logout()
+                                            }}>
+                                                Logout
+                                            </MenuItem>
                                         </Menu>
                                     </>
                                 ) : (
