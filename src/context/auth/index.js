@@ -8,7 +8,7 @@ export const AuthProvider = (props) => {
         isLoggedin: false,
         user: {},
     })
-
+    const [loader, setLoader] = useState(true)
     const users =  [
         {
             name: 'Thor',
@@ -25,6 +25,7 @@ export const AuthProvider = (props) => {
     ]
 
     useEffect(() => {
+        setLoader(true)
         checkAuth()
     }, [])
     console.log(auth.isLoggedin);
@@ -40,7 +41,7 @@ export const AuthProvider = (props) => {
         console.log(currentUser);
         console.log(user);
         console.log(userObj);
-        if(userObj){
+        if(currentUser){
             setAuth((previousProps) => {
                 return({
                     ...previousProps,
