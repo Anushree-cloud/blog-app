@@ -1,5 +1,5 @@
-import React, { useState, createContext } from 'react'
-import toast from 'react-hot-toast'
+import React, { useState, useEffect, createContext } from 'react'
+
 
 export const AuthContext = createContext()
 
@@ -24,18 +24,28 @@ export const AuthProvider = (props) => {
         },
     ]
 
-    function checkAuth(userId) { 
+    useEffect(() => {
+        checkAuth()
+    }, [])
+    console.log(auth.isLoggedin);
+    function checkAuth() { 
         let user = localStorage.getItem('user')
-        // console.log(JSON.parse(user));
-        let currentUser = user.find((value) => {
-            return (value.id === userId) 
-        })
+        let userObj = JSON.parse(user)
+        let currentUser = {}
         if(user){
+            currentUser = users.find((value) =>{
+                return value.userId === userObj.userId
+            })
+        }
+        console.log(currentUser);
+        console.log(user);
+        console.log(userObj);
+        if(userObj){
             setAuth((previousProps) => {
                 return({
                     ...previousProps,
                     isLoggedin: true,
-                    user: currentUser,
+                    user: userObj,
                 })
             })
         }
@@ -56,7 +66,6 @@ export const AuthProvider = (props) => {
                 })
             })
             localStorage.setItem('user', JSON.stringify(currentUser))
-            checkAuth(currentUser.userId)
             return Boolean(currentUser);
         }
     }
