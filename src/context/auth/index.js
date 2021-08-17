@@ -27,6 +27,7 @@ export const AuthProvider = (props) => {
     useEffect(() => {
         setLoader(true)
         checkAuth()
+        setLoader(false)
     }, [])
     console.log(auth.isLoggedin);
     function checkAuth() { 
@@ -67,8 +68,8 @@ export const AuthProvider = (props) => {
                 })
             })
             localStorage.setItem('user', JSON.stringify(currentUser))
-            return Boolean(currentUser);
         }
+        return Boolean(currentUser);
     }
     
     function logout() {
@@ -83,7 +84,7 @@ export const AuthProvider = (props) => {
 
     return (
         <AuthContext.Provider value={{ auth, login, logout }} >
-            {props.children}
+            {loader ? <>Loading....</> : props.children}
         </AuthContext.Provider>
     )
 }

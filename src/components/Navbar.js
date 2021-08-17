@@ -55,7 +55,7 @@ import { AccountCircle } from '@material-ui/icons';
                             {
                                 auth.isLoggedin ? (
                                     <>
-                                        <Typography edge="start" variant="h6" className={classes.title}>
+                                        <Typography edge="start" variant="button" className={classes.title}>
                                             Welcome {auth.user.name}
                                         </Typography>
                                         <IconButton
